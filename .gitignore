@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+#Other
+*.bak.h
+*.bak
+*.orig
+*.rej
