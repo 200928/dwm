@@ -107,7 +107,6 @@ static const char *chrome[] = { "google-chrome-stable", "--proxy-server=127.0.0.
 static const char *yesplaymusic[] = { "kstart5", "/opt/YesPlayMusic/yesplaymusic", NULL };
 static const char *kdeconnect_handler[] = { "kdeconnect-handler", NULL };
 static const char *dolphin[] = { "dolphin", NULL };
-static const char *wallpaper[] = { "feh", "--bg-fill", "--randomize", "~/wallpaper/*", NULL };
 static const char *qv2ray[] = { "kstart5", "qv2ray", NULL };
 static const char *trayer[] = { "/home/minghui/scripts/trayer.sh", NULL };
 static const char *redshift[] = { "/home/minghui/scripts/redshift.sh", NULL };
@@ -133,9 +132,10 @@ static Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = kdeconnect_handler } },
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = qv2ray } },
 	{ Mod4Mask,        	        XK_e,      spawn,          {.v = dolphin } },
-	{ Mod4Mask,        	        XK_p,      spawn,          {.v = wallpaper } },
 	{ Mod1Mask|ShiftMask,           XK_t,      spawn,          {.v = trayer } },
 	//===================================默认===========================================
+	{ Mod4Mask,			XK_k,	   hidewin,	   {0} },
+	{ Mod4Mask|ShiftMask,		XK_k,	   restorewin,	   {0} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
