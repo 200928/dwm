@@ -136,6 +136,8 @@ static Key keys[] = {
 	{ Mod4Mask,        	        XK_p,      spawn,          {.v = wallpaper } },
 	{ Mod1Mask|ShiftMask,           XK_t,      spawn,          {.v = trayer } },
 	//===================================默认===========================================
+	{ MODKEY,			XK_k,	   hidewin,	   {0} },
+	{ MODKEY|ShiftMask,		XK_k,	   restorewin,	   {0} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
