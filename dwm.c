@@ -287,6 +287,10 @@ static Visual *visual;
 static int depth;
 static Colormap cmap;
 
+#define hiddenWinStackMax 100
+static int hiddenWinStackTop = -1;
+static Client* hiddenWinStack[hiddenWinStackMax];
+
 /* configuration, allows nested code to access above variables */
 #include "config.h"
 
@@ -1941,6 +1945,31 @@ updatebarpos(Monitor *m)
 		m->wy = m->topbar ? m->wy + bh : m->wy;
 	} else
 		m->by = -bh;
+}
+
+void hidewin(const Arg *arg) {
+	if (!selmon->sel)
+		return;
+	Client *c = (Client*)selmon->sel;
+	hide(c);
+	hiddenWinStack[++hiddenWinStackTop] = c;
+}
+
+void restorewin(const Arg *arg) {
+	int i = hiddenWinStackTop;
+	while (i > -1) {
+		if (HIDDEN(hiddenWinStack[i]) && hiddenWinStack[i]->tags == selmon->tagset[selmon->seltags]) {
+			show(hiddenWinStack[i]);
+			focus(hiddenWinStack[i]);
+			restack(selmon);
+			for (int j = i; j < hiddenWinStackTop; ++j) {
+				hiddenWinStack[j] = hiddenWinStack[j + 1];
+			}
+			--hiddenWinStackTop;
+			return;
+		}
+		--i;
+	}
 }
 
 void
