@@ -95,6 +95,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static const char *voldown[]  = { "/home/minghui/scripts/voldown.sh", NULL };
 static const char *volup[]  = { "/home/minghui/scripts/volup.sh", NULL };
 //static const char *voltoggle[]  = { "/home/minghui/scripts/voltoggle.sh", NULL };
@@ -112,6 +114,7 @@ static const char *trayer[] = { "/home/minghui/scripts/trayer.sh", NULL };
 static const char *redshift[] = { "/home/minghui/scripts/redshift.sh", NULL };
 static const char *slock[] = { "slock", NULL };
 static const char *change_wallpaper[] = { "/home/minghui/scripts/change_wallpaper.sh", NULL };
+static const char *nvim[] = { "nvim", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	//{ MODKEY,                       XK_F1,     spawn,          {.v = voltoggle } },
@@ -122,20 +125,22 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F3,     spawn,          {.v = volup } },
 	{ MODKEY,                       XK_F1,     spawn,          {.v = redshift } },
 	{ Mod4Mask,                     XK_l,      spawn,          {.v = slock } },
-	{ MODKEY,		        XK_F6,     spawn,          {.v = change_wallpaper } },
+	{ MODKEY,		        		XK_F6,     spawn,          {.v = change_wallpaper } },
 	//=================================自定义快捷键=====================================
-	{ Mod1Mask|ControlMask,		XK_a,	   spawn,	   {.v = flameshot} },
-	{ Mod1Mask|ControlMask|ShiftMask, XK_a,	   spawn,	   {.v = kill_flameshot} },
+	{ Mod1Mask|ControlMask,			XK_a,	   spawn,		   {.v = flameshot} },
+	{ Mod1Mask|ControlMask|ShiftMask, XK_a,	   spawn,		   {.v = kill_flameshot} },
 	{ ControlMask|Mod1Mask,         XK_t,      spawn,          {.v = typora } },
 	{ ControlMask|Mod1Mask,         XK_g,      spawn,          {.v = chrome } },
 	{ ControlMask|Mod1Mask,         XK_m,      spawn,          {.v = yesplaymusic } },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = kdeconnect_handler } },
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = qv2ray } },
-	{ Mod4Mask,        	        XK_e,      spawn,          {.v = dolphin } },
+	{ ControlMask|Mod1Mask,         XK_v,      spawn,          {.v = nvim } },
+	{ Mod4Mask,        	        	XK_e,      spawn,          {.v = dolphin } },
 	{ Mod1Mask|ShiftMask,           XK_t,      spawn,          {.v = trayer } },
 	//===================================默认===========================================
-	{ Mod4Mask,			XK_k,	   hidewin,	   {0} },
-	{ Mod4Mask|ShiftMask,		XK_k,	   restorewin,	   {0} },
+	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
+	{ Mod4Mask,						XK_k,	   hidewin,	   	   {0} },
+	{ Mod4Mask|ShiftMask,			XK_k,	   restorewin,	   {0} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -143,8 +148,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_s,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_v,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
@@ -166,9 +171,17 @@ static Key keys[] = {
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY|ShiftMask,				XK_f,	   fullscreen,	   {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ ControlMask|ShiftMask,        XK_1,      setlayout,      {.v = &layouts[1]} },
+	{ ControlMask|ShiftMask,        XK_2,      setlayout,      {.v = &layouts[2]} },
+	{ ControlMask|ShiftMask,        XK_3,      setlayout,      {.v = &layouts[3]} },
+	{ ControlMask|ShiftMask,        XK_4,      setlayout,      {.v = &layouts[4]} },
+	{ ControlMask|ShiftMask,        XK_5,      setlayout,      {.v = &layouts[5]} },
+	{ ControlMask|ShiftMask,        XK_6,      setlayout,      {.v = &layouts[6]} },
+	{ ControlMask|ShiftMask,        XK_7,      setlayout,      {.v = &layouts[7]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
