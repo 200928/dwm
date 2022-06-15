@@ -96,11 +96,12 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "100x30", NULL };
 static const char *voldown[]  = { "/home/minghui/scripts/voldown.sh", NULL };
 static const char *volup[]  = { "/home/minghui/scripts/volup.sh", NULL };
 //static const char *voltoggle[]  = { "/home/minghui/scripts/voltoggle.sh", NULL };
-static const char *flameshot[] = { "flameshot", "gui", NULL };
+static const char *flameshot[] = { "/home/minghui/scripts/flameshot.sh", NULL };
+static const char *flameshot_gui[] = { "/home/minghui/scripts/flameshot_gui.sh", NULL };
 static const char *kill_flameshot[] = { "killall", "flameshot", NULL };
 static const char *lightdown[] = { "/home/minghui/scripts/lightdown.sh", NULL };
 static const char *lightup[] = { "/home/minghui/scripts/lightup.sh", NULL };
@@ -115,6 +116,7 @@ static const char *redshift[] = { "/home/minghui/scripts/redshift.sh", NULL };
 static const char *slock[] = { "slock", NULL };
 static const char *change_wallpaper[] = { "/home/minghui/scripts/change_wallpaper.sh", NULL };
 static const char *nvim[] = { "nvim", NULL };
+static const char *eolink[] = { "/opt/Eolink.AppImage", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	//{ MODKEY,                       XK_F1,     spawn,          {.v = voltoggle } },
@@ -128,13 +130,15 @@ static Key keys[] = {
 	{ MODKEY,		        		XK_F6,     spawn,          {.v = change_wallpaper } },
 	//=================================自定义快捷键=====================================
 	{ Mod1Mask|ControlMask,			XK_a,	   spawn,		   {.v = flameshot} },
-	{ Mod1Mask|ControlMask|ShiftMask, XK_a,	   spawn,		   {.v = kill_flameshot} },
+	{ Mod1Mask|ControlMask,			XK_z,	   spawn,		   {.v = flameshot_gui} },
+	{ Mod1Mask|ControlMask|ShiftMask, XK_z,	   spawn,		   {.v = kill_flameshot} },
 	{ ControlMask|Mod1Mask,         XK_t,      spawn,          {.v = typora } },
 	{ ControlMask|Mod1Mask,         XK_g,      spawn,          {.v = chrome } },
 	{ ControlMask|Mod1Mask,         XK_m,      spawn,          {.v = yesplaymusic } },
 	{ ControlMask|Mod1Mask,         XK_p,      spawn,          {.v = kdeconnect_handler } },
 	{ ControlMask|Mod1Mask,         XK_q,      spawn,          {.v = qv2ray } },
 	{ ControlMask|Mod1Mask,         XK_v,      spawn,          {.v = nvim } },
+	{ ControlMask|Mod1Mask,         XK_e,      spawn,          {.v = eolink } },
 	{ Mod4Mask,        	        	XK_e,      spawn,          {.v = dolphin } },
 	{ Mod1Mask|ShiftMask,           XK_t,      spawn,          {.v = trayer } },
 	//===================================默认===========================================
@@ -142,6 +146,7 @@ static Key keys[] = {
 	{ Mod4Mask,						XK_k,	   hidewin,	   	   {0} },
 	{ Mod4Mask|ShiftMask,			XK_k,	   restorewin,	   {0} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} }, // 窗口置顶
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
@@ -183,7 +188,6 @@ static Key keys[] = {
 	{ ControlMask|ShiftMask,        XK_6,      setlayout,      {.v = &layouts[6]} },
 	{ ControlMask|ShiftMask,        XK_7,      setlayout,      {.v = &layouts[7]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
