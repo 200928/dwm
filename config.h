@@ -12,8 +12,10 @@ static       int smartgaps          = 0;        /* 1 means no outer gap when the
 
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { /*"SauceCodePro Nerd Font Mono:size=10",
-					"JetBrains Mono SemiBold:size=10",*/
+static const char *fonts[]          = { 
+					// "JetBrains Mono SemiBold:size=10",
+					                    // "Rec Mono Casual:style=Regular:size=11:LineHeight=1.2"
+                    // "SauceCodePro Nerd Font Mono:size=10",
 					"WenQuanYi Micro Hei:size=11:type=Regular:antialias=true:autohint=true"};
 // static const char dmenufont[]       = "monospace:size=10";
 static const char dmenufont[]       = "WenQuanYi Micro Hei:size=11";
@@ -96,7 +98,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "100x30", NULL };
+// static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "100x30", NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x20", NULL };
 static const char *voldown[]  = { "/home/minghui/scripts/voldown.sh", NULL };
 static const char *volup[]  = { "/home/minghui/scripts/volup.sh", NULL };
 //static const char *voltoggle[]  = { "/home/minghui/scripts/voltoggle.sh", NULL };
@@ -117,6 +120,9 @@ static const char *slock[] = { "slock", NULL };
 static const char *change_wallpaper[] = { "/home/minghui/scripts/change_wallpaper.sh", NULL };
 static const char *nvim[] = { "nvim", NULL };
 static const char *eolink[] = { "/opt/Eolink.AppImage", NULL };
+static const char *rofi[] = { "/home/minghui/scripts/rofi.sh", NULL };
+static const char *powermenu[] = { "/home/minghui/scripts/powermenu.sh", NULL };
+static const char *time[] = { "/home/minghui/scripts/time.sh", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	//{ MODKEY,                       XK_F1,     spawn,          {.v = voltoggle } },
@@ -126,7 +132,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F2,     spawn,          {.v = voldown } },
 	{ MODKEY,                       XK_F3,     spawn,          {.v = volup } },
 	{ MODKEY,                       XK_F1,     spawn,          {.v = redshift } },
-	{ Mod4Mask,                     XK_l,      spawn,          {.v = slock } },
+	// { Mod4Mask,                     XK_l,      spawn,          {.v = slock } },
+	{ Mod4Mask,                     XK_l,      spawn,          {.v = powermenu } },
 	{ MODKEY,		        		XK_F6,     spawn,          {.v = change_wallpaper } },
 	//=================================自定义快捷键=====================================
 	{ Mod1Mask|ControlMask,			XK_a,	   spawn,		   {.v = flameshot} },
@@ -140,6 +147,7 @@ static Key keys[] = {
 	{ ControlMask|Mod1Mask,         XK_v,      spawn,          {.v = nvim } },
 	{ ControlMask|Mod1Mask,         XK_e,      spawn,          {.v = eolink } },
 	{ Mod4Mask,        	        	XK_e,      spawn,          {.v = dolphin } },
+	{ Mod4Mask,        	        	XK_t,      spawn,          {.v = time } },
 	{ Mod1Mask|ShiftMask,           XK_t,      spawn,          {.v = trayer } },
 	//===================================默认===========================================
 	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
@@ -147,7 +155,8 @@ static Key keys[] = {
 	{ Mod4Mask|ShiftMask,			XK_k,	   restorewin,	   {0} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} }, // 窗口置顶
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	// { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = rofi } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },

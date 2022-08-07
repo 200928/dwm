@@ -36,3 +36,5 @@
 *.bak
 *.orig
 *.rej
+
+.local_history
