@@ -16,7 +16,11 @@ static const char *fonts[]          = {
 					// "JetBrains Mono SemiBold:size=10",
 					                    // "Rec Mono Casual:style=Regular:size=11:LineHeight=1.2"
                     // "SauceCodePro Nerd Font Mono:size=10",
-					"WenQuanYi Micro Hei:size=11:type=Regular:antialias=true:autohint=true"};
+					"UbuntuMono Nerd Font Mno:size=10:type=Regular:antialias=true:autohint=true",
+					// "Rec Mono Casual:size=11:type=Regular:antialias=true:autohint=true",
+					"WenQuanYi Micro Hei:size=10:type=Regular:antialias=true:autohint=true",
+					"JoyPixels:pixelsize=10:type=Regular:antialias=true:autohint=true"
+};
 // static const char dmenufont[]       = "monospace:size=10";
 static const char dmenufont[]       = "WenQuanYi Micro Hei:size=11";
 static const char col_gray1[]       = "#222222";
@@ -41,6 +45,7 @@ static const unsigned int alphas[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+// static const char *tags[] = { "₁", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉" };
 
 static const Rule rules[] = {
 	/* xprop(1):
