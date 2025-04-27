@@ -7,7 +7,7 @@ static const unsigned int gappih    = 0;       /* 窗体之间的水平内部间
 static const unsigned int gappiv    = 0;       /* 窗体之间的垂直内部间隙 */
 static const unsigned int gappoh    = 0;       /* 窗口和屏幕边缘之间的垂直外部间隙 */
 static const unsigned int gappov    = 0;       /* 窗口和屏幕边缘之间的水平外部间隙*/
-static       int smartgaps          = 0;        /* 1 means no outer gap when there is
+static       int smartgaps          = 1;        /* 1 means no outer gap when there is
 						     only one window */
 
 static const int showbar            = 1;        /* 0 means no bar */
